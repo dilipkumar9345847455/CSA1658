@@ -1,0 +1,102 @@
+
+R version 4.2.1 (2022-06-23 ucrt) -- "Funny-Looking Kid"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[Previously saved workspace restored]
+
+> IQ <- rnorm(40, 30, 2)
+> IQ <- sort(IQ)
+> result <- c(0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
++ 1, 0, 0, 0, 1, 1, 0, 0, 1, 0,
++ 0, 0, 1, 0, 0, 1, 1, 0, 1, 1,
++ 1, 1, 1, 0, 1, 1, 1, 1, 0, 1)
+> df <- as.data.frame(cbind(IQ, result))
+> print(df)
+         IQ result
+1  25.62435      0
+2  26.07985      0
+3  26.57636      0
+4  26.61415      1
+5  26.99532      0
+6  27.88628      0
+7  27.91691      0
+8  28.08513      0
+9  28.23427      0
+10 28.35509      1
+11 28.54491      1
+12 28.77442      0
+13 29.04396      0
+14 29.20762      0
+15 29.32898      1
+16 29.34811      1
+17 29.45518      0
+18 29.49504      0
+19 29.55194      1
+20 29.93105      0
+21 30.16219      0
+22 30.27711      0
+23 30.27730      1
+24 30.30376      0
+25 30.43130      0
+26 30.65621      1
+27 30.68682      1
+28 30.89176      0
+29 30.91776      1
+30 31.08016      1
+31 31.23191      1
+32 31.33683      1
+33 31.36486      1
+34 31.58149      0
+35 31.68646      1
+36 32.11922      1
+37 32.58942      1
+38 32.85734      1
+39 33.06232      0
+40 33.16412      1
+> png(file="LogisticRegressionGFG.png")
+> plot(IQ, result, xlab = "IQ Level",
++ ylab = "Probability of Passing")
+> g = glm(result~IQ, family=binomial, df)
+> curve(predict(g, data.frame(IQ=x), type="resp"), add=TRUE)
+> points(IQ, fitted(g), pch=30)
+There were 40 warnings (use warnings() to see them)
+> summary(g)
+
+Call:
+glm(formula = result ~ IQ, family = binomial, data = df)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.8711  -1.0093  -0.4626   0.9701   1.9712  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)  
+(Intercept) -15.6059     6.4626  -2.415   0.0157 *
+IQ            0.5192     0.2155   2.409   0.0160 *
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 55.352  on 39  degrees of freedom
+Residual deviance: 47.919  on 38  degrees of freedom
+AIC: 51.919
+
+Number of Fisher Scoring iterations: 3
+
+> dev.off()
